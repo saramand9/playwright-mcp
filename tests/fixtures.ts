@@ -22,8 +22,9 @@ import { test as baseTest, expect as baseExpect } from '@playwright/test';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { ListRootsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import { TestServer } from '../../../playwright-mcp/tests/testserver/index';
+import { TestServer } from './testserver/index';
 
+import type { Config } from '../config';
 import type { BrowserContext } from 'playwright';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import type { Stream } from 'stream';
@@ -39,8 +40,6 @@ type CDPServer = {
   start: () => Promise<BrowserContext>;
 };
 
-type Config = any;
-
 export type StartClient = (options?: {
   clientName?: string,
   args?: string[],
@@ -48,6 +47,7 @@ export type StartClient = (options?: {
   roots?: { name: string, uri: string }[],
   rootsResponseDelay?: number,
   extensionToken?: string,
+  env?: Record<string, string>,
 }) => Promise<{ client: Client, stderr: () => string }>;
 
 
@@ -104,7 +104,7 @@ export const test = baseTest.extend<TestFixtures & TestOptions, WorkerFixtures>(
           };
         });
       }
-      const { transport, stderr } = await createTransport(args, cwd, mcpMode, testInfo.outputPath('ms-playwright'), options?.extensionToken);
+      const { transport, stderr } = await createTransport(args, cwd, mcpMode, testInfo.outputPath('ms-playwright'), options?.env ?? {});
       let stderrBuffer = '';
       stderr?.on('data', data => {
         if (process.env.PWMCP_DEBUG)
@@ -183,26 +183,36 @@ export const test = baseTest.extend<TestFixtures & TestOptions, WorkerFixtures>(
   },
 });
 
-async function createTransport(args: string[], cwd: string, mcpMode: TestOptions['mcpMode'], profilesDir: string, extensionToken?: string): Promise<{
+async function createTransport(args: string[], cwd: string, mcpMode: TestOptions['mcpMode'], profilesDir: string, env: Record<string, string>): Promise<{
   transport: Transport,
   stderr: Stream | null,
 }> {
-  if (mcpMode === 'docker')
-    throw new Error('Docker mode is not supported in protocol-v1-compat tests');
+  if (mcpMode === 'docker') {
+    const relCwd = path.relative(test.info().project.outputDir, cwd);
+    const dockerCwd = path.posix.join('/app/test-results', relCwd.split(path.sep).join('/'));
+    const dockerArgs = ['run', '--rm', '-i', '--network=host', '-v', `${test.info().project.outputDir}:/app/test-results`, '-w', dockerCwd];
+    const transport = new StdioClientTransport({
+      command: 'docker',
+      args: [...dockerArgs, 'playwright-mcp-dev:latest', ...args],
+    });
+    return {
+      transport,
+      stderr: transport.stderr,
+    };
+  }
 
-  const mcpPath = path.join(path.dirname(require.resolve('@playwright/mcp')), 'cli.js');
   const transport = new StdioClientTransport({
     command: 'node',
-    args: [mcpPath, ...args],
+    args: [path.join(__dirname, '../cli.js'), ...args],
     cwd,
     stderr: 'pipe',
     env: {
       ...process.env,
-      DEBUG: 'pw:mcp:test',
+      DEBUG: process.env.PWMCP_DEBUG ? 'pw:mcp*' : 'pw:mcp:test',
       DEBUG_COLORS: '0',
       DEBUG_HIDE_DATE: '1',
       PWMCP_PROFILES_DIR_FOR_TEST: profilesDir,
-      ...(extensionToken ? { PLAYWRIGHT_MCP_EXTENSION_TOKEN: extensionToken } : {}),
+      ...env,
     },
   });
   return {

@@ -400,7 +400,7 @@ Playwright MCP server supports following arguments. They can be provided in the 
 | --console-level <level> | level of console messages to return: "error", "warning", "info", "debug". Each level includes the messages of more severe levels.<br>*env* `PLAYWRIGHT_MCP_CONSOLE_LEVEL` |
 | --device <device> | device to emulate, for example: "iPhone 15"<br>*env* `PLAYWRIGHT_MCP_DEVICE` |
 | --executable-path <path> | path to the browser executable.<br>*env* `PLAYWRIGHT_MCP_EXECUTABLE_PATH` |
-| --extension | Connect to a running browser instance (Edge/Chrome only). Requires the "Playwright MCP Bridge" browser extension to be installed.<br>*env* `PLAYWRIGHT_MCP_EXTENSION` |
+| --extension | Connect to a running browser instance (Edge/Chrome only). Requires the "Playwright Extension" to be installed.<br>*env* `PLAYWRIGHT_MCP_EXTENSION` |
 | --endpoint <endpoint> | Bound browser endpoint to connect to.<br>*env* `PLAYWRIGHT_MCP_ENDPOINT` |
 | --grant-permissions <permissions...> | List of permissions to grant to the browser context, for example "geolocation", "clipboard-read", "clipboard-write".<br>*env* `PLAYWRIGHT_MCP_GRANT_PERMISSIONS` |
 | --headless | run browser in headless mode, headed by default<br>*env* `PLAYWRIGHT_MCP_HEADLESS` |
@@ -418,7 +418,7 @@ Playwright MCP server supports following arguments. They can be provided in the 
 | --proxy-server <proxy> | specify proxy server, for example "http://myproxy:3128" or "socks5://myproxy:8080"<br>*env* `PLAYWRIGHT_MCP_PROXY_SERVER` |
 | --sandbox | enable the sandbox for all process types that are normally not sandboxed.<br>*env* `PLAYWRIGHT_MCP_SANDBOX` |
 | --save-session | Whether to save the Playwright MCP session into the output directory.<br>*env* `PLAYWRIGHT_MCP_SAVE_SESSION` |
-| --secrets <path> | path to a file containing secrets in the dotenv format<br>*env* `PLAYWRIGHT_MCP_SECRETS` |
+| --secrets <path> | path to a file containing secrets in the dotenv format<br>*env* `PLAYWRIGHT_MCP_SECRETS_FILE` |
 | --shared-browser-context | reuse the same browser context between all connected HTTP clients.<br>*env* `PLAYWRIGHT_MCP_SHARED_BROWSER_CONTEXT` |
 | --snapshot-mode <mode> | when taking snapshots for responses, specifies the mode to use. Can be "full" or "none". Default is "full".<br>*env* `PLAYWRIGHT_MCP_SNAPSHOT_MODE` |
 | --storage-state <path> | path to the storage state file for isolated sessions.<br>*env* `PLAYWRIGHT_MCP_STORAGE_STATE` |
@@ -453,6 +453,9 @@ Persistent profile is located at the following locations and you can override it
 
 `{workspace-hash}` is derived from the MCP client's workspace root, so different projects get separate profiles automatically.
 
+> [!IMPORTANT]
+> A persistent profile can only be used by one browser instance at a time, so concurrent MCP clients sharing the same workspace will conflict. To run several clients in parallel, start each additional client with `--isolated` or point it at a distinct `--user-data-dir`.
+
 **Isolated**
 
 In the isolated mode, each session is started in the isolated profile. Every time you ask MCP to close the browser,
@@ -477,7 +480,7 @@ state [here](https://playwright.dev/docs/auth).
 
 **Browser Extension**
 
-The Playwright MCP Chrome Extension allows you to connect to existing browser tabs and leverage your logged-in sessions and browser state. See [packages/extension/README.md](packages/extension/README.md) for installation and setup instructions.
+The Playwright MCP Chrome Extension allows you to connect to existing browser tabs and leverage your logged-in sessions and browser state. See [microsoft/playwright › packages/extension](https://github.com/microsoft/playwright/tree/main/packages/extension#readme) for installation and setup instructions.
 
 ### Initial state
 
@@ -594,7 +597,7 @@ npx @playwright/mcp@latest --config path/to/config.json
   /**
    * Connect to a running browser instance (Edge/Chrome only). If specified, `browser`
    * config is ignored.
-   * Requires the "Playwright MCP Bridge" browser extension to be installed.
+   * Requires the "Playwright Extension" to be installed.
    */
   extension?: boolean;
 
@@ -824,8 +827,7 @@ http.createServer(async (req, res) => {
   - Description: Perform click on a web page
   - Parameters:
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
     - `doubleClick` (boolean, optional): Whether to perform a double click instead of a single click
     - `button` (string, optional): Button to click, defaults to left
     - `modifiers` (array, optional): Modifier keys to press
@@ -856,12 +858,22 @@ http.createServer(async (req, res) => {
   - Title: Drag mouse
   - Description: Perform drag and drop between two elements
   - Parameters:
-    - `startElement` (string): Human-readable source element description used to obtain the permission to interact with the element
-    - `startRef` (string): Exact source element reference from the page snapshot
-    - `startSelector` (string, optional): CSS or role selector for the source element, when ref is not available
-    - `endElement` (string): Human-readable target element description used to obtain the permission to interact with the element
-    - `endRef` (string): Exact target element reference from the page snapshot
-    - `endSelector` (string, optional): CSS or role selector for the target element, when ref is not available
+    - `startElement` (string, optional): Human-readable source element description used to obtain the permission to interact with the element
+    - `startTarget` (string): Exact target element reference from the page snapshot, or a unique element selector
+    - `endElement` (string, optional): Human-readable target element description used to obtain the permission to interact with the element
+    - `endTarget` (string): Exact target element reference from the page snapshot, or a unique element selector
+  - Read-only: **false**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
+- **browser_drop**
+  - Title: Drop files or data onto an element
+  - Description: Drop files or MIME-typed data onto an element, as if dragged from outside the page. At least one of "paths" or "data" must be provided.
+  - Parameters:
+    - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
+    - `paths` (array, optional): Absolute paths to files to drop onto the element.
+    - `data` (object, optional): Data to drop, as a map of MIME type to string value (e.g. {"text/plain": "hello", "text/uri-list": "https://example.com"}).
   - Read-only: **false**
 
 <!-- NOTE: This has been generated via update-readme.js -->
@@ -870,10 +882,9 @@ http.createServer(async (req, res) => {
   - Title: Evaluate JavaScript
   - Description: Evaluate JavaScript expression on page or element
   - Parameters:
-    - `function` (string): () => { /* code */ } or (element) => { /* code */ } when element is provided
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string, optional): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available.
+    - `target` (string, optional): Exact target element reference from the page snapshot, or a unique element selector
+    - `function` (string): () => { /* code */ } or (element) => { /* code */ } when element is provided
     - `filename` (string, optional): Filename to save the result to. If not provided, result is returned as text.
   - Read-only: **false**
 
@@ -912,8 +923,7 @@ http.createServer(async (req, res) => {
   - Description: Hover over element on page
   - Parameters:
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
   - Read-only: **false**
 
 <!-- NOTE: This has been generated via update-readme.js -->
@@ -935,13 +945,22 @@ http.createServer(async (req, res) => {
 
 <!-- NOTE: This has been generated via update-readme.js -->
 
+- **browser_network_request**
+  - Title: Show network request details
+  - Description: Returns full details (headers and body) of a single network request, or a single part if `part` is set. Use the number from browser_network_requests.
+  - Parameters:
+    - `index` (integer): 1-based index of the request, as printed by browser_network_requests.
+    - `part` (string, optional): Return only this part of the request. Omit to return full details.
+    - `filename` (string, optional): Filename to save the result to. If not provided, output is returned as text.
+  - Read-only: **true**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
 - **browser_network_requests**
   - Title: List network requests
-  - Description: Returns all network requests since loading the page
+  - Description: Returns a numbered list of network requests since loading the page. Use browser_network_request with the number to get full details.
   - Parameters:
     - `static` (boolean): Whether to include successful static resources like images, fonts, scripts, etc. Defaults to false.
-    - `requestBody` (boolean): Whether to include request body. Defaults to false.
-    - `requestHeaders` (boolean): Whether to include request headers. Defaults to false.
     - `filter` (string, optional): Only return requests whose URL matches this regexp (e.g. "/api/.*user").
     - `filename` (string, optional): Filename to save the network requests to. If not provided, requests are returned as text.
   - Read-only: **true**
@@ -967,9 +986,9 @@ http.createServer(async (req, res) => {
 
 <!-- NOTE: This has been generated via update-readme.js -->
 
-- **browser_run_code**
-  - Title: Run Playwright code
-  - Description: Run Playwright code snippet
+- **browser_run_code_unsafe**
+  - Title: Run Playwright code (unsafe)
+  - Description: Run a Playwright code snippet. Unsafe: executes arbitrary JavaScript in the Playwright server process and is RCE-equivalent.
   - Parameters:
     - `code` (string, optional): A JavaScript function containing Playwright code to execute. It will be invoked with a single argument, page, which you can use for any page interaction. For example: `async (page) => { await page.getByRole('button', { name: 'Submit' }).click(); return await page.title(); }`
     - `filename` (string, optional): Load code from the specified file. If both code and filename are provided, code will be ignored.
@@ -982,8 +1001,7 @@ http.createServer(async (req, res) => {
   - Description: Select an option in a dropdown
   - Parameters:
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
     - `values` (array): Array of values to select in the dropdown. This can be a single value or multiple values.
   - Read-only: **false**
 
@@ -993,10 +1011,10 @@ http.createServer(async (req, res) => {
   - Title: Page snapshot
   - Description: Capture accessibility snapshot of the current page, this is better than screenshot
   - Parameters:
+    - `target` (string, optional): Exact target element reference from the page snapshot, or a unique element selector
     - `filename` (string, optional): Save snapshot to markdown file instead of returning it in the response.
-    - `ref` (string, optional): Element reference from the previous page snapshot to capture a partial snapshot instead of the whole page
-    - `selector` (string, optional): Element selector of the root element to capture a partial snapshot instead of the whole page
     - `depth` (number, optional): Limit the depth of the snapshot tree
+    - `boxes` (boolean, optional): Include each element's bounding box as [box=x,y,width,height] in the snapshot
   - Read-only: **true**
 
 <!-- NOTE: This has been generated via update-readme.js -->
@@ -1005,11 +1023,10 @@ http.createServer(async (req, res) => {
   - Title: Take a screenshot
   - Description: Take a screenshot of the current page. You can't perform actions based on the screenshot, use browser_snapshot for actions.
   - Parameters:
+    - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
+    - `target` (string, optional): Exact target element reference from the page snapshot, or a unique element selector
     - `type` (string): Image format for the screenshot. Default is png.
     - `filename` (string, optional): File name to save the screenshot to. Defaults to `page-{timestamp}.{png|jpeg}` if not specified. Prefer relative file names to stay within the output directory.
-    - `element` (string, optional): Human-readable element description used to obtain permission to screenshot the element. If not provided, the screenshot will be taken of viewport. If element is provided, ref must be provided too.
-    - `ref` (string, optional): Exact target element reference from the page snapshot. If not provided, the screenshot will be taken of viewport. If ref is provided, element must be provided too.
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available.
     - `fullPage` (boolean, optional): When true, takes a screenshot of the full scrollable page, instead of the currently visible viewport. Cannot be used with element screenshots.
   - Read-only: **true**
 
@@ -1020,8 +1037,7 @@ http.createServer(async (req, res) => {
   - Description: Type text into editable element
   - Parameters:
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
     - `text` (string): Text to type into the element
     - `submit` (boolean, optional): Whether to submit entered text (press Enter after)
     - `slowly` (boolean, optional): Whether to type one character at a time. Useful for triggering key handlers in the page. By default entire text is filled in at once.
@@ -1287,6 +1303,35 @@ http.createServer(async (req, res) => {
 
 <!-- NOTE: This has been generated via update-readme.js -->
 
+- **browser_annotate**
+  - Title: Annotate the current page
+  - Description: Open the Playwright Dashboard in annotation mode for the current page and wait for the user to draw annotations. Returns the annotated screenshot, ARIA snapshot, and the list of annotations.
+  - Parameters: None
+  - Read-only: **true**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
+- **browser_hide_highlight**
+  - Title: Hide element highlight
+  - Description: Remove a highlight overlay previously added for the element.
+  - Parameters:
+    - `element` (string, optional): Human-readable element description used when adding the highlight; must match the value passed to browser_highlight.
+    - `target` (string, optional): Exact target element reference from the page snapshot, or a unique element selector
+  - Read-only: **true**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
+- **browser_highlight**
+  - Title: Highlight element
+  - Description: Show a persistent highlight overlay around the element on the page.
+  - Parameters:
+    - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
+    - `style` (string, optional): Additional inline CSS applied to the highlight overlay, e.g. "outline: 2px dashed red".
+  - Read-only: **true**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
 - **browser_resume**
   - Title: Resume paused script execution
   - Description: Resume script execution after it was paused. When called with step set to true, execution will pause again before the next action.
@@ -1434,8 +1479,7 @@ http.createServer(async (req, res) => {
   - Description: Generate locator for the given element to use in tests
   - Parameters:
     - `element` (string, optional): Human-readable element description used to obtain permission to interact with the element
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot, or a unique element selector
   - Read-only: **true**
 
 <!-- NOTE: This has been generated via update-readme.js -->
@@ -1455,8 +1499,7 @@ http.createServer(async (req, res) => {
   - Description: Verify list is visible on the page
   - Parameters:
     - `element` (string): Human-readable list description
-    - `ref` (string): Exact target element reference that points to the list
-    - `selector` (string, optional): CSS or role selector for the target list, when "ref" is not available.
+    - `target` (string): Exact target element reference that points to the list
     - `items` (array): Items to verify
   - Read-only: **false**
 
@@ -1477,8 +1520,7 @@ http.createServer(async (req, res) => {
   - Parameters:
     - `type` (string): Type of the element
     - `element` (string): Human-readable element description
-    - `ref` (string): Exact target element reference from the page snapshot
-    - `selector` (string, optional): CSS or role selector for the target element, when "ref" is not available
+    - `target` (string): Exact target element reference from the page snapshot
     - `value` (string): Value to verify. For checkbox, use "true" or "false".
   - Read-only: **false**
 
