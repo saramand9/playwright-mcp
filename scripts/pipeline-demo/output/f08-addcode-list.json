@@ -1,0 +1,92 @@
+[
+  {
+    "step": 1,
+    "tool": "browser_verify_page_url",
+    "label": "Verify URL contains device-manager",
+    "addCode": "await expect(page).toHaveURL(/device-manager/);"
+  },
+  {
+    "step": 2,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备管理\" text visible",
+    "addCode": "await expect(page.getByText('📱 设备管理平台')).toBeVisible();"
+  },
+  {
+    "step": 3,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"品牌\" filter label visible",
+    "addCode": "await expect(page.locator('#filter-panel').getByText('品牌')).toBeVisible();"
+  },
+  {
+    "step": 4,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"操作系统\" filter label visible",
+    "addCode": "await expect(page.locator('#filter-panel').getByText('操作系统')).toBeVisible();"
+  },
+  {
+    "step": 5,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"运行内存\" filter label visible",
+    "addCode": "await expect(page.getByText('运行内存')).toBeVisible();"
+  },
+  {
+    "step": 6,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"存储容量\" filter label visible",
+    "addCode": "await expect(page.getByText('存储容量')).toBeVisible();"
+  },
+  {
+    "step": 7,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备状态\" filter label visible",
+    "addCode": "await expect(page.getByText('设备状态')).toBeVisible();"
+  },
+  {
+    "step": 8,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"30\" count badge visible",
+    "addCode": "await expect(page.getByText('30', { exact: true })).toBeVisible();"
+  },
+  {
+    "step": 9,
+    "tool": "browser_verify_state",
+    "label": "Verify table visible",
+    "addCode": "await expect(page.getByText('设备ID ▲ 品牌 型号 操作系统 系统版本 屏幕尺寸 RAM 存储 电池 网络 价格 状态 采购日期 部门 NFC 刷新率 DEV-')).toBeVisible();"
+  },
+  {
+    "step": 10,
+    "tool": "browser_verify_state",
+    "label": "Verify paginator visible",
+    "addCode": "await expect(page.getByText('‹123›')).toBeVisible();"
+  },
+  {
+    "step": 11,
+    "tool": "browser_evaluate",
+    "label": "Expand more filters (toggleExtended)",
+    "addCode": "await page.evaluate('() => (toggleExtended())');"
+  },
+  {
+    "step": 12,
+    "tool": "browser_evaluate",
+    "label": "Set min price 3000 and max price 8000 via evaluate",
+    "addCode": "await page.evaluate('() => ((() => {\\n        // Try multiple strategies to find price inputs\\n        let found = [];\\n        // Strategy 1: by ID\\n        const byId = document.querySelectorAll(\\'#filter-price-min, #filter-price-max, #price-min, #price-max, [id*=\"price\"]\\');\\n        if (byId.length >= 2) found = [byId[0], byId[1]];\\n        // Strategy 2: number inputs in extended-filters\\n        if (found.length < 2) {\\n          const inExtended = document.querySelectorAll(\\'#extended-filters input[type=\"number\"]\\');\\n          if (inExtended.length >= 2) found = [inExtended[0], inExtended[1]];\\n        }\\n        // Strategy 3: all number inputs\\n        if (found.length < 2) {\\n          const allNum = document.querySelectorAll(\\'input[type=\"number\"]\\');\\n          if (allNum.length >= 2) found = [allNum[0], allNum[1]];\\n        }\\n        if (found.length >= 2) {\\n          found[0].value = \\'3000\\';\\n          found[0].dispatchEvent(new Event(\\'input\\', { bubbles: true }));\\n          found[0].dispatchEvent(new Event(\\'change\\', { bubbles: true }));\\n          found[1].value = \\'8000\\';\\n          found[1].dispatchEvent(new Event(\\'input\\', { bubbles: true }));\\n          found[1].dispatchEvent(new Event(\\'change\\', { bubbles: true }));\\n          return \\'OK: set \\' + (found[0].id||found[0].name||\\'input0\\') + \\'=3000, \\' + (found[1].id||found[1].name||\\'input1\\') + \\'=8000\\';\\n        }\\n        return \\'FAIL: found \\' + found.length + \\' number inputs total. IDs: \\' + JSON.stringify(Array.from(document.querySelectorAll(\\'input[type=\"number\"]\\')).map(e => e.id||e.name||\\'(none)\\'));\\n      })())');"
+  },
+  {
+    "step": 13,
+    "tool": "browser_click",
+    "label": "Click \"查询\" button",
+    "addCode": "await page.getByRole('button', { name: '查询' }).click();"
+  },
+  {
+    "step": 14,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify filtered result count changed",
+    "addCode": "await expect(page.getByText('18', { exact: true })).toBeVisible();"
+  },
+  {
+    "step": 15,
+    "tool": "browser_verify_state",
+    "label": "Verify \"查询\" button still visible",
+    "addCode": "await expect(page.getByRole('button', { name: '查询' })).toBeVisible();"
+  }
+]

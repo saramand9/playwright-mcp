@@ -1,0 +1,400 @@
+[
+  {
+    "step": 1,
+    "label": "Verify URL contains device-manager",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_page_url",
+        "arguments": {
+          "expected": "device-manager",
+          "mode": "contains"
+        }
+      }
+    },
+    "response": {
+      "id": 3,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n### Ran Playwright code\n```js\nawait expect(page).toHaveURL(/device-manager/);\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 2,
+    "label": "Verify \"设备管理\" text visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "设备管理"
+        }
+      }
+    },
+    "response": {
+      "id": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//span[contains(text(),\\\"📱 设备管理平台\\\")]\",\"fullXPath\":\"/html/body/div/span\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('📱 设备管理平台')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 3,
+    "label": "Verify \"品牌\" filter label visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "品牌"
+        }
+      }
+    },
+    "response": {
+      "id": 5,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[1]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('品牌')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 4,
+    "label": "Verify \"操作系统\" filter label visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 6,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "操作系统"
+        }
+      }
+    },
+    "response": {
+      "id": 6,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[2]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div[2]/div\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('操作系统')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 5,
+    "label": "Verify \"运行内存\" filter label visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 7,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "运行内存"
+        }
+      }
+    },
+    "response": {
+      "id": 7,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[3]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div[3]/div\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('运行内存')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 6,
+    "label": "Verify \"存储容量\" filter label visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 8,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "存储容量"
+        }
+      }
+    },
+    "response": {
+      "id": 8,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[4]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div[4]/div\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('存储容量')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 7,
+    "label": "Verify \"设备状态\" filter label visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 9,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "设备状态"
+        }
+      }
+    },
+    "response": {
+      "id": 9,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[5]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div[5]/div\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('设备状态')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 8,
+    "label": "Verify \"30\" count badge visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 10,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "30"
+        }
+      }
+    },
+    "response": {
+      "id": 10,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-count\\\"]\",\"fullXPath\":\"/html/body/div[2]/div/h2/span\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('30', { exact: true })).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 9,
+    "label": "Verify table visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 11,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "设备表格",
+          "ref": "e89",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 11,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//div[2]/div[2]/div[2]/table[1]\",\"fullXPath\":\"/html/body/div[2]/div[2]/div[2]/table\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('设备ID ▲ 品牌 型号 操作系统 系统版本 屏幕尺寸 RAM 存储 电池 网络 价格 状态 采购日期 部门 NFC 刷新率 DEV-')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 10,
+    "label": "Verify paginator visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 12,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "分页器",
+          "ref": "e289",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 12,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"pagination\\\"]\",\"fullXPath\":\"/html/body/div[2]/div[2]/div[3]\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('‹123›')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 11,
+    "label": "Expand more filters (toggleExtended)",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 13,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_evaluate",
+        "arguments": {
+          "function": "toggleExtended()"
+        }
+      }
+    },
+    "response": {
+      "id": 13,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nundefined\n### Ran Playwright code\n```js\nawait page.evaluate('() => (toggleExtended())');\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 12,
+    "label": "Set min price 3000 and max price 8000 via evaluate",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 15,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_evaluate",
+        "arguments": {
+          "function": "(() => {\n        // Try multiple strategies to find price inputs\n        let found = [];\n        // Strategy 1: by ID\n        const byId = document.querySelectorAll('#filter-price-min, #filter-price-max, #price-min, #price-max, [id*=\"price\"]');\n        if (byId.length >= 2) found = [byId[0], byId[1]];\n        // Strategy 2: number inputs in extended-filters\n        if (found.length < 2) {\n          const inExtended = document.querySelectorAll('#extended-filters input[type=\"number\"]');\n          if (inExtended.length >= 2) found = [inExtended[0], inExtended[1]];\n        }\n        // Strategy 3: all number inputs\n        if (found.length < 2) {\n          const allNum = document.querySelectorAll('input[type=\"number\"]');\n          if (allNum.length >= 2) found = [allNum[0], allNum[1]];\n        }\n        if (found.length >= 2) {\n          found[0].value = '3000';\n          found[0].dispatchEvent(new Event('input', { bubbles: true }));\n          found[0].dispatchEvent(new Event('change', { bubbles: true }));\n          found[1].value = '8000';\n          found[1].dispatchEvent(new Event('input', { bubbles: true }));\n          found[1].dispatchEvent(new Event('change', { bubbles: true }));\n          return 'OK: set ' + (found[0].id||found[0].name||'input0') + '=3000, ' + (found[1].id||found[1].name||'input1') + '=8000';\n        }\n        return 'FAIL: found ' + found.length + ' number inputs total. IDs: ' + JSON.stringify(Array.from(document.querySelectorAll('input[type=\"number\"]')).map(e => e.id||e.name||'(none)'));\n      })()"
+        }
+      }
+    },
+    "response": {
+      "id": 15,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\n\"OK: set filter-price-min=3000, filter-price-max=8000\"\n### Ran Playwright code\n```js\nawait page.evaluate('() => ((() => {\\n        // Try multiple strategies to find price inputs\\n        let found = [];\\n        // Strategy 1: by ID\\n        const byId = document.querySelectorAll(\\'#filter-price-min, #filter-price-max, #price-min, #price-max, [id*=\"price\"]\\');\\n        if (byId.length >= 2) found = [byId[0], byId[1]];\\n        // Strategy 2: number inputs in extended-filters\\n        if (found.length < 2) {\\n          const inExtended = document.querySelectorAll(\\'#extended-filters input[type=\"number\"]\\');\\n          if (inExtended.length >= 2) found = [inExtended[0], inExtended[1]];\\n        }\\n        // Strategy 3: all number inputs\\n        if (found.length < 2) {\\n          const allNum = document.querySelectorAll(\\'input[type=\"number\"]\\');\\n          if (allNum.length >= 2) found = [allNum[0], allNum[1]];\\n        }\\n        if (found.length >= 2) {\\n          found[0].value = \\'3000\\';\\n          found[0].dispatchEvent(new Event(\\'input\\', { bubbles: true }));\\n          found[0].dispatchEvent(new Event(\\'change\\', { bubbles: true }));\\n          found[1].value = \\'8000\\';\\n          found[1].dispatchEvent(new Event(\\'input\\', { bubbles: true }));\\n          found[1].dispatchEvent(new Event(\\'change\\', { bubbles: true }));\\n          return \\'OK: set \\' + (found[0].id||found[0].name||\\'input0\\') + \\'=3000, \\' + (found[1].id||found[1].name||\\'input1\\') + \\'=8000\\';\\n        }\\n        return \\'FAIL: found \\' + found.length + \\' number inputs total. IDs: \\' + JSON.stringify(Array.from(document.querySelectorAll(\\'input[type=\"number\"]\\')).map(e => e.id||e.name||\\'(none)\\'));\\n      })())');\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 13,
+    "label": "Click \"查询\" button",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 16,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_click",
+        "arguments": {
+          "element": "查询按钮",
+          "ref": "e82"
+        }
+      }
+    },
+    "response": {
+      "id": 16,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//button[contains(text(),\\\"查询\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div[4]/button\"}\n### Ran Playwright code\n```js\nawait page.getByRole('button', { name: '查询' }).click();\n```\n### Page\n- Page URL: http://localhost:8080/device-manager.html\n- Page Title: 设备管理平台 — Playwright 测试靶场\n- Console: 1 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-mcp\\page-2026-05-05T04-42-48-224Z.yml)"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 14,
+    "label": "Verify filtered result count changed",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 18,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "18"
+        }
+      }
+    },
+    "response": {
+      "id": 18,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-count\\\"]\",\"fullXPath\":\"/html/body/div[2]/div/h2/span\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('18', { exact: true })).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 15,
+    "label": "Verify \"查询\" button still visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 19,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "查询按钮",
+          "ref": "e82",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 19,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//button[contains(text(),\\\"查询\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div[4]/button\"}\n### Ran Playwright code\n```js\nawait expect(page.getByRole('button', { name: '查询' })).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  }
+]

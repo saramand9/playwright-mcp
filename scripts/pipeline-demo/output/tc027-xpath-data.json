@@ -1,0 +1,72 @@
+[
+  {
+    "step": 2,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备管理\" text visible",
+    "xpath": "//span[contains(text(),\"📱 设备管理平台\")]",
+    "fullXPath": "/html/body/div/span"
+  },
+  {
+    "step": 3,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"品牌\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[1]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div"
+  },
+  {
+    "step": 4,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"操作系统\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[2]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[2]/div"
+  },
+  {
+    "step": 5,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"30\" count badge visible",
+    "xpath": "//*[@id=\"filter-count\"]",
+    "fullXPath": "/html/body/div[2]/div/h2/span"
+  },
+  {
+    "step": 6,
+    "tool": "browser_verify_state",
+    "label": "Verify table visible",
+    "xpath": "//div[2]/div[2]/div[2]/table[1]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table"
+  },
+  {
+    "step": 7,
+    "tool": "browser_verify_state",
+    "label": "Verify paginator visible",
+    "xpath": "//*[@id=\"pagination\"]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[3]"
+  },
+  {
+    "step": 8,
+    "tool": "browser_click",
+    "label": "Click price column header (ascending)",
+    "xpath": "//th[contains(text(),\"价格\")]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table/thead/tr/th[11]"
+  },
+  {
+    "step": 9,
+    "tool": "browser_click",
+    "label": "Click price column header (descending)",
+    "xpath": "//th[contains(text(),\"价格 ▲\")]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table/thead/tr/th[11]"
+  },
+  {
+    "step": 10,
+    "tool": "browser_verify_state",
+    "label": "Verify table still visible after sort",
+    "xpath": "//div[2]/div[2]/div[2]/table[1]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table"
+  },
+  {
+    "step": 11,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify count still 30",
+    "xpath": "//*[@id=\"filter-count\"]",
+    "fullXPath": "/html/body/div[2]/div/h2/span"
+  }
+]

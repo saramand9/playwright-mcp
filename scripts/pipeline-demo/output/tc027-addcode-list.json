@@ -1,0 +1,68 @@
+[
+  {
+    "step": 1,
+    "tool": "browser_verify_page_url",
+    "label": "Verify URL contains device-manager",
+    "addCode": "await expect(page).toHaveURL(/device-manager/);"
+  },
+  {
+    "step": 2,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备管理\" text visible",
+    "addCode": "await expect(page.getByText('📱 设备管理平台')).toBeVisible();"
+  },
+  {
+    "step": 3,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"品牌\" filter label visible",
+    "addCode": "await expect(page.locator('#filter-panel').getByText('品牌')).toBeVisible();"
+  },
+  {
+    "step": 4,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"操作系统\" filter label visible",
+    "addCode": "await expect(page.locator('#filter-panel').getByText('操作系统')).toBeVisible();"
+  },
+  {
+    "step": 5,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"30\" count badge visible",
+    "addCode": "await expect(page.getByText('30', { exact: true })).toBeVisible();"
+  },
+  {
+    "step": 6,
+    "tool": "browser_verify_state",
+    "label": "Verify table visible",
+    "addCode": "await expect(page.getByText('设备ID ▲ 品牌 型号 操作系统 系统版本 屏幕尺寸 RAM 存储 电池 网络 价格 状态 采购日期 部门 NFC 刷新率 DEV-')).toBeVisible();"
+  },
+  {
+    "step": 7,
+    "tool": "browser_verify_state",
+    "label": "Verify paginator visible",
+    "addCode": "await expect(page.getByText('‹123›')).toBeVisible();"
+  },
+  {
+    "step": 8,
+    "tool": "browser_click",
+    "label": "Click price column header (ascending)",
+    "addCode": "await page.getByRole('columnheader', { name: '价格' }).click();"
+  },
+  {
+    "step": 9,
+    "tool": "browser_click",
+    "label": "Click price column header (descending)",
+    "addCode": "await page.getByRole('columnheader', { name: '价格 ▲' }).click();"
+  },
+  {
+    "step": 10,
+    "tool": "browser_verify_state",
+    "label": "Verify table still visible after sort",
+    "addCode": "await expect(page.getByText('设备ID 品牌 型号 操作系统 系统版本 屏幕尺寸 RAM 存储 电池 网络 价格 ▼ 状态 采购日期 部门 NFC 刷新率 DEV-')).toBeVisible();"
+  },
+  {
+    "step": 11,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify count still 30",
+    "addCode": "await expect(page.getByText('30', { exact: true })).toBeVisible();"
+  }
+]

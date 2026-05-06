@@ -1,0 +1,298 @@
+[
+  {
+    "step": 1,
+    "label": "Verify URL contains device-manager",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_page_url",
+        "arguments": {
+          "expected": "device-manager",
+          "mode": "contains"
+        }
+      }
+    },
+    "response": {
+      "id": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n### Ran Playwright code\n```js\nawait expect(page).toHaveURL(/device-manager/);\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 2,
+    "label": "Verify \"设备管理\" text visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "设备管理"
+        }
+      }
+    },
+    "response": {
+      "id": 5,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//span[contains(text(),\\\"📱 设备管理平台\\\")]\",\"fullXPath\":\"/html/body/div/span\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('📱 设备管理平台')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 3,
+    "label": "Verify \"品牌\" text visible in filter",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 6,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "品牌"
+        }
+      }
+    },
+    "response": {
+      "id": 6,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[1]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('品牌')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 4,
+    "label": "Verify \"操作系统\" text visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 7,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "操作系统"
+        }
+      }
+    },
+    "response": {
+      "id": 7,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-panel\\\"]/div[1]/div[2]/div[1]\",\"fullXPath\":\"/html/body/div[2]/div/div/div[2]/div\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('操作系统')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 5,
+    "label": "Verify \"30\" count badge visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 8,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "30"
+        }
+      }
+    },
+    "response": {
+      "id": 8,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//*[@id=\\\"filter-count\\\"]\",\"fullXPath\":\"/html/body/div[2]/div/h2/span\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('30', { exact: true })).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 6,
+    "label": "Verify Apple tag visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 9,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "Apple品牌标签",
+          "ref": "e23",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 9,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//label[contains(text(),\\\"Apple\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div[2]/label\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('Apple')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 7,
+    "label": "Verify Samsung tag visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 10,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "Samsung品牌标签",
+          "ref": "e24",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 10,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//label[contains(text(),\\\"Samsung\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div[2]/label[2]\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('Samsung')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 8,
+    "label": "Verify 华为 tag visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 11,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "华为品牌标签",
+          "ref": "e25",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 11,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//label[contains(text(),\\\"华为\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div[2]/label[3]\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('华为')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 9,
+    "label": "Verify table visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 12,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_state",
+        "arguments": {
+          "element": "设备表格",
+          "ref": "e89",
+          "state": "visible"
+        }
+      }
+    },
+    "response": {
+      "id": 12,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//div[2]/div[2]/div[2]/table[1]\",\"fullXPath\":\"/html/body/div[2]/div[2]/div[2]/table\"}\n### Ran Playwright code\n```js\nawait expect(page.getByText('设备ID ▲ 品牌 型号 操作系统 系统版本 屏幕尺寸 RAM 存储 电池 网络 价格 状态 采购日期 部门 NFC 刷新率 DEV-')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 10,
+    "label": "Click Apple brand filter tag",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 13,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_click",
+        "arguments": {
+          "element": "Apple品牌筛选标签",
+          "ref": "e23"
+        }
+      }
+    },
+    "response": {
+      "id": 13,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//label[contains(text(),\\\"Apple\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div[2]/label\"}\n### Ran Playwright code\n```js\nawait page.locator('#filter-panel').getByText('Apple').click();\n```\n### Page\n- Page URL: http://localhost:8080/device-manager.html\n- Page Title: 设备管理平台 — Playwright 测试靶场\n- Console: 1 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-mcp\\page-2026-05-05T03-10-58-022Z.yml)"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "step": 11,
+    "label": "Verify Apple still visible",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 15,
+      "method": "tools/call",
+      "params": {
+        "name": "browser_verify_text_visible",
+        "arguments": {
+          "text": "Apple"
+        }
+      }
+    },
+    "response": {
+      "id": 15,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "### Result\nDone\n{\"xpath\":\"//label[contains(text(),\\\"Apple\\\")]\",\"fullXPath\":\"/html/body/div[2]/div/div/div/div[2]/label\"}\n### Ran Playwright code\n```js\nawait expect(page.locator('#filter-panel').getByText('Apple')).toBeVisible();\n```"
+          }
+        ]
+      }
+    }
+  }
+]

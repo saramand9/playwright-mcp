@@ -1,0 +1,86 @@
+[
+  {
+    "step": 2,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备管理\" text visible",
+    "xpath": "//span[contains(text(),\"📱 设备管理平台\")]",
+    "fullXPath": "/html/body/div/span"
+  },
+  {
+    "step": 3,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"品牌\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[1]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div"
+  },
+  {
+    "step": 4,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"操作系统\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[2]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[2]/div"
+  },
+  {
+    "step": 5,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"运行内存\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[3]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[3]/div"
+  },
+  {
+    "step": 6,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"存储容量\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[4]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[4]/div"
+  },
+  {
+    "step": 7,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备状态\" filter label visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[5]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[5]/div"
+  },
+  {
+    "step": 8,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"30\" count badge visible",
+    "xpath": "//*[@id=\"filter-count\"]",
+    "fullXPath": "/html/body/div[2]/div/h2/span"
+  },
+  {
+    "step": 9,
+    "tool": "browser_verify_state",
+    "label": "Verify table visible",
+    "xpath": "//div[2]/div[2]/div[2]/table[1]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table"
+  },
+  {
+    "step": 10,
+    "tool": "browser_verify_state",
+    "label": "Verify paginator visible",
+    "xpath": "//*[@id=\"pagination\"]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[3]"
+  },
+  {
+    "step": 13,
+    "tool": "browser_click",
+    "label": "Click \"查询\" button",
+    "xpath": "//button[contains(text(),\"查询\")]",
+    "fullXPath": "/html/body/div[2]/div/div[4]/button"
+  },
+  {
+    "step": 14,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify filtered result count changed",
+    "xpath": "//*[@id=\"filter-count\"]",
+    "fullXPath": "/html/body/div[2]/div/h2/span"
+  },
+  {
+    "step": 15,
+    "tool": "browser_verify_state",
+    "label": "Verify \"查询\" button still visible",
+    "xpath": "//button[contains(text(),\"查询\")]",
+    "fullXPath": "/html/body/div[2]/div/div[4]/button"
+  }
+]

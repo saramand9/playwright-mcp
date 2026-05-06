@@ -1,0 +1,72 @@
+[
+  {
+    "step": 2,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"设备管理\" text visible",
+    "xpath": "//span[contains(text(),\"📱 设备管理平台\")]",
+    "fullXPath": "/html/body/div/span"
+  },
+  {
+    "step": 3,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"品牌\" text visible in filter",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[1]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div"
+  },
+  {
+    "step": 4,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"操作系统\" text visible",
+    "xpath": "//*[@id=\"filter-panel\"]/div[1]/div[2]/div[1]",
+    "fullXPath": "/html/body/div[2]/div/div/div[2]/div"
+  },
+  {
+    "step": 5,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify \"30\" count badge visible",
+    "xpath": "//*[@id=\"filter-count\"]",
+    "fullXPath": "/html/body/div[2]/div/h2/span"
+  },
+  {
+    "step": 6,
+    "tool": "browser_verify_state",
+    "label": "Verify Apple tag visible",
+    "xpath": "//label[contains(text(),\"Apple\")]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div[2]/label"
+  },
+  {
+    "step": 7,
+    "tool": "browser_verify_state",
+    "label": "Verify Samsung tag visible",
+    "xpath": "//label[contains(text(),\"Samsung\")]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div[2]/label[2]"
+  },
+  {
+    "step": 8,
+    "tool": "browser_verify_state",
+    "label": "Verify 华为 tag visible",
+    "xpath": "//label[contains(text(),\"华为\")]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div[2]/label[3]"
+  },
+  {
+    "step": 9,
+    "tool": "browser_verify_state",
+    "label": "Verify table visible",
+    "xpath": "//div[2]/div[2]/div[2]/table[1]",
+    "fullXPath": "/html/body/div[2]/div[2]/div[2]/table"
+  },
+  {
+    "step": 10,
+    "tool": "browser_click",
+    "label": "Click Apple brand filter tag",
+    "xpath": "//label[contains(text(),\"Apple\")]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div[2]/label"
+  },
+  {
+    "step": 11,
+    "tool": "browser_verify_text_visible",
+    "label": "Verify Apple still visible",
+    "xpath": "//label[contains(text(),\"Apple\")]",
+    "fullXPath": "/html/body/div[2]/div/div/div/div[2]/label"
+  }
+]
